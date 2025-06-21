@@ -4,12 +4,12 @@ Trying to create a To-Do app with Frontend and Backend.
 ## 🛠 **Technology stack**
 | Technology  | Description |
 |------------|-------------|
-| **Golang** 🟦 | Main languagy of the project |
+| **Golang** 🟦 | Main language of the project |
 | **Gin** 🔀 | Used as router |
 | **SQLite/PostgreSQL** 🗄 | Planned DB for tasks |
-| **Docker** 🐳 | Containirization! |
+| **Docker** 🐳 | Containerization! |
 
-## Currently realised
+## Currently realized
 The following functional is currently implemented:
 - Task creation
 - Task edition
@@ -18,4 +18,4 @@ The following functional is currently implemented:
 ## TO-DO
 - Postgres
 - Tests
-- Metrics using grafana
+- Metrics using Grafana
