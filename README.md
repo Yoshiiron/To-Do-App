@@ -1,4 +1,4 @@
-# To-Do-App
+# To-Do App
 Trying to create a To-Do app with Frontend and Backend.
 
 ## 🛠 **Technology stack**
@@ -19,3 +19,17 @@ The following functional is currently implemented:
 - Postgres
 - Tests
 - Metrics using Grafana
+---
+## How to run the App
+
+### Local Run
+```
+git clone git@github.com:Yoshiiron/To-Do-App.git
+cd backend go run .
+cd ../frontend/src
+npm start
+```
+
+### Docker
+**NOT READY YET**
+
