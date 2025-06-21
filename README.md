@@ -1,19 +1,21 @@
 # To-Do-App
 Trying to create a To-Do app with Frontend and Backend.
 
-# Frontend
-Frontend is written using [react](https://react.dev/).
+## 🛠 **Technology stack**
+| Technology  | Description |
+|------------|-------------|
+| **Golang** 🟦 | Main languagy of the project |
+| **Gin** 🔀 | Used as router |
+| **SQLite/PostgreSQL** 🗄 | Planned DB for tasks |
+| **Docker** 🐳 | Containirization! |
 
-#Backend
-Golang(gin) was used for backend.
-
-# Currently realised
+## Currently realised
 The following functional is currently implemented:
 - Task creation
 - Task edition
 - Task deletion
 
-#TO-DO
+## TO-DO
 - Postgres
 - Tests
 - Metrics using grafana
