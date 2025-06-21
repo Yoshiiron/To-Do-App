@@ -1,0 +1,100 @@
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #000000, #0a0f3c);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  font-family: sans-serif;
+}
+
+.issues {
+  display: grid;
+  grid-template-columns: repeat(3, 300px);
+  gap: 1rem;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.issue-card {
+  position: relative;
+  background-color: white;
+  color: #333;
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 5px solid #007bff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  min-height: 100px;
+}
+
+
+.issue-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.issue-card p {
+  margin: 0.5rem 0;
+}
+
+.issue-id {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 1rem;
+  font-size: 0.85rem;
+  color: #666;
+  opacity: 0;
+}
+
+.issue-card:hover .issue-id {
+  opacity: 1;
+}
+
+.delete-issue {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 0.85rem;
+  color: #666;
+  opacity: 0;
+}
+
+.change-issue {
+  position: absolute;
+  top: 0.5rem;
+  right: 3rem;
+  font-size: 0.85rem;
+  color: #666;
+  opacity: 0;
+}
+
+.issue-card:hover .change-issue {
+  opacity: 1;
+}
+
+.issue-card:hover .delete-issue {
+  opacity: 1;
+}
+
+.filter-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.filter-buttons button {
+  padding: 8px 16px;
+  background-color: #ddd;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.filter-buttons .active-filter {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
