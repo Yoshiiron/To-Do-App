@@ -17,13 +17,13 @@ func Init(r *gin.Engine) {
 	r.DELETE("/tasks/:ID", deleteTask)
 }
 
-func getTasks(c *gin.Context) {
+func getIssue(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"resp": issues,
 	})
 }
 
-func postTasks(c *gin.Context) {
+func postIssue(c *gin.Context) {
 	var newIssue models.Issue
 	if err := c.ShouldBindJSON(&newIssue); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -42,7 +42,7 @@ func postTasks(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{})
 }
 
-func updateTask(c *gin.Context) {
+func updateIssue(c *gin.Context) {
 	idParam := c.Param("ID")
 	id, err := strconv.Atoi(idParam)
 	if err != nil {
@@ -69,7 +69,7 @@ func updateTask(c *gin.Context) {
 	}
 }
 
-func deleteTask(c *gin.Context) {
+func deleteIssue(c *gin.Context) {
 	idParam := c.Param("ID")
 	id, err := strconv.Atoi(idParam)
 	if err != nil {
