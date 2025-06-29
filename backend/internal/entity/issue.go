@@ -1,4 +1,4 @@
-package models
+package entity
 
 type Issue struct {
 	Summary     string

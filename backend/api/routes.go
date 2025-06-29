@@ -1,20 +1,20 @@
 package api
 
 import (
-	"backend/internal/models"
+	"backend/internal/entity"
 	"net/http"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
-var issues = []models.Issue{{Summary: "Убраться", Description: "Убраться в квартире", ID: 1, Status: "To Do"}, {Summary: "Помыть", Description: "Посуду или полы?", ID: 2, Status: "Done"}}
+var issues = []entity.Issue{{Summary: "Убраться", Description: "Убраться в квартире", ID: 1, Status: "To Do"}, {Summary: "Помыть", Description: "Посуду или полы?", ID: 2, Status: "Done"}}
 
 func Init(r *gin.Engine) {
-	r.GET("/tasks", getTasks)
-	r.POST("/tasks", postTasks)
-	r.POST("/task/:ID", updateTask)
-	r.DELETE("/tasks/:ID", deleteTask)
+	r.GET("/tasks", getIssue)
+	r.POST("/tasks", postIssue)
+	r.POST("/task/:ID", updateIssue)
+	r.DELETE("/tasks/:ID", deleteIssue)
 }
 
 func getIssue(c *gin.Context) {
@@ -24,7 +24,7 @@ func getIssue(c *gin.Context) {
 }
 
 func postIssue(c *gin.Context) {
-	var newIssue models.Issue
+	var newIssue entity.Issue
 	if err := c.ShouldBindJSON(&newIssue); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
@@ -51,7 +51,7 @@ func updateIssue(c *gin.Context) {
 		})
 		return
 	}
-	var updatedIssue models.Issue
+	var updatedIssue entity.Issue
 	if err := c.ShouldBindJSON(&updatedIssue); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
