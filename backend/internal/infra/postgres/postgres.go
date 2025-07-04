@@ -3,7 +3,6 @@ package postgres
 import (
 	"backend/internal/domain"
 	"backend/internal/repository"
-	"fmt"
 
 	pg "gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -31,7 +30,6 @@ func (i *issueRepository) Create(issue *domain.Issue) error {
 // Delete implements repository.IssueRepository.
 func (i *issueRepository) Delete(id int) error {
 	tx := i.db.Delete(&domain.Issue{}, id)
-	fmt.Println(tx)
 	return tx.Error
 }
 
