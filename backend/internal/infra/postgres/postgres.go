@@ -3,6 +3,7 @@ package postgres
 import (
 	"backend/internal/domain"
 	"backend/internal/repository"
+	"fmt"
 
 	pg "gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -35,12 +36,23 @@ func (i *issueRepository) Delete(id int) error {
 
 // FindByID implements repository.IssueRepository.
 func (i *issueRepository) FindByID(id int) (*domain.Issue, int, error) {
-	panic("unimplemented")
+	issue := &domain.Issue{}
+	tx := i.db.Find(&issue, id)
+	fmt.Println(&domain.Issue{})
+	if issue.IssueID != 0 {
+		return issue, issue.IssueID, tx.Error
+	}
+	return nil, 0, fmt.Errorf("no issue was found")
 }
 
 // ReturnAllIssues implements repository.IssueRepository.
 func (i *issueRepository) ReturnAllIssues() ([]domain.Issue, error) {
-	panic("unimplemented")
+	issues := []domain.Issue{}
+	i.db.Find(&issues)
+	if len(issues) == 0 {
+		return nil, fmt.Errorf("looks like db is empty")
+	}
+	return issues, nil
 }
 
 // Update implements repository.IssueRepository.

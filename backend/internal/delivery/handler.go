@@ -3,6 +3,7 @@ package delivery
 import (
 	"backend/internal/domain"
 	"backend/internal/usecases"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -45,12 +46,15 @@ func (h *IssueHandler) FindByID(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "issue with this id not found",
 		})
+		return
 	}
 	issue, _, err := h.service.FindByID(id)
+	fmt.Println(err)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "issue with this id not found",
 		})
+		return
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"response": issue,
@@ -74,6 +78,7 @@ func (h *IssueHandler) Update(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
 		})
+		return
 	}
 
 	h.service.Update(&updatedIssue, id)
