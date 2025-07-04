@@ -43,7 +43,7 @@ func (h *IssueHandler) FindByID(c *gin.Context) {
 	idParam := c.Param("ID")
 	id, err := strconv.Atoi(idParam)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
+		c.JSON(http.StatusNotFound, gin.H{
 			"error": "issue with this id not found",
 		})
 		return
@@ -51,7 +51,7 @@ func (h *IssueHandler) FindByID(c *gin.Context) {
 	issue, _, err := h.service.FindByID(id)
 	fmt.Println(err)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
+		c.JSON(http.StatusNotFound, gin.H{
 			"error": "issue with this id not found",
 		})
 		return
@@ -85,7 +85,14 @@ func (h *IssueHandler) Update(c *gin.Context) {
 }
 
 func (h *IssueHandler) ReturnAllIssues(c *gin.Context) {
-	db, _ := h.service.ReturnAllIssues()
+	db, err := h.service.ReturnAllIssues()
+
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{
 		"response": db,
