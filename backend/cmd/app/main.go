@@ -2,7 +2,7 @@ package main
 
 import (
 	"backend/internal/delivery"
-	mdb "backend/internal/infra/MDB"
+	"backend/internal/infra/postgres"
 	"backend/internal/usecases"
 
 	"github.com/gin-contrib/cors"
@@ -11,8 +11,8 @@ import (
 
 func main() {
 
-	repo := mdb.NewIssueRepository()
-	//repo := postgres.NewIssueRepository()
+	//repo := mdb.NewIssueRepository()
+	repo := postgres.NewIssueRepository()
 	usecase := usecases.NewIssueService(repo)
 	handler := delivery.NewIssueHandler(usecase)
 

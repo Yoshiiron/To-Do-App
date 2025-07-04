@@ -98,5 +98,11 @@ func (h *IssueHandler) Delete(c *gin.Context) {
 		return
 	}
 
-	h.service.Delete(id)
+	err = h.service.Delete(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
 }

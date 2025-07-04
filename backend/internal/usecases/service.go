@@ -32,9 +32,9 @@ func (s *IssueService) ReturnAllIssues() ([]domain.Issue, error) {
 }
 
 func (s *IssueService) Delete(id int) error {
-	_, _, err := s.repo.FindByID(id)
+	err := s.repo.Delete(id)
 	if err != nil {
 		return err
 	}
-	return s.repo.Delete(id)
+	return nil
 }
