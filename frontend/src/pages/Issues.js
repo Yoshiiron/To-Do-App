@@ -15,14 +15,14 @@ const [idToEdit, setIDToEdit] = useState(null);
 useEffect(() => {
   axios.get("http://localhost:8080/tasks")
   .then(resp => {
-    setIssues(resp.data.resp);
+    setIssues(resp.data.response);
   })
 }, [])
 
 const deleteIssue = (id) => {
   axios.delete(`http://localhost:8080/tasks/${id}`)
   .then(() => {
-    setIssues(prevIssue => prevIssue.filter(item => item.ID !== id));
+    setIssues(prevIssue => prevIssue.filter(item => item.IssueID !== id));
   })
   .catch(error => {
     console.error('Ошибка при удалении:', error)
@@ -60,8 +60,8 @@ const filterIssues = filter === 'All'
                 <p>Summary: {issue.Summary}</p>
                 <p>Description: {issue.Description}</p>
                 <p>Status: {issue.Status}</p>
-                <p className="issue-id">ID: {issue.ID}</p>
-                <button className="delete-issue" onClick={() => deleteIssue(issue.ID)}>❌</button>
+                <p className="issue-id">ID: {issue.IssueID}</p>
+                <button className="delete-issue" onClick={() => deleteIssue(issue.IssueID)}>❌</button>
                 <button className="change-issue" onClick={() => {setModalOpen(true); setIDToEdit(issue);}}>🖋</button>
 
               </li>

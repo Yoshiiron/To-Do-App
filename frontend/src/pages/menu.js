@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useEffect, useRef, useState } from 'react';
 import { Routes, Route, NavLink, useLocation } from 'react-router-dom';
 
 import Home from './Home';      
@@ -12,10 +12,25 @@ import '../styles/App.css'
 function SomeApp() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const menuRef = useRef(null);
   const location = useLocation();
+
 
   const toggleMenu = () => setMenuOpen(prev => !prev);
   const closeMenu = () => setMenuOpen(false);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuOpen && menuRef.current && !menuRef.current.contains(event.target)) {
+        closeMenu();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [menuOpen]);
 
   return (
     <>
@@ -33,7 +48,7 @@ function SomeApp() {
         </button>)}
       </header>
 
-      <nav className={`side-menu ${menuOpen ? 'open' : ''}`}>
+      <nav ref={menuRef} className={`side-menu ${menuOpen ? 'open' : ''}`}>
         <NavLink to="/" end className={({ isActive }) => (isActive ? 'active' : '')} onClick={closeMenu}>
           Main
         </NavLink>
