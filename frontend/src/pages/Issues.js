@@ -17,6 +17,8 @@ useEffect(() => {
   .then(resp => {
     setIssues(resp.data.response);
   })
+  .catch(() => {
+  })
 }, [])
 
 const deleteIssue = (id) => {
@@ -42,6 +44,8 @@ const filterIssues = filter === 'All'
         <div>
           <center><h2>Issues</h2></center>
 
+          {filterIssues.length > 0 ? (
+            <div>
           <div className="filter-buttons">
             {['All', 'To Do', 'In Progress', 'Done'].map(status => (
               <button
@@ -54,8 +58,8 @@ const filterIssues = filter === 'All'
             ))}
           </div>
 
-          <ul class="issues">
-            {filterIssues.map((issue, index) => (
+              <ul class="issues">
+              {filterIssues.map((issue, index) => (
               <li key={index} className="issue-card">
                 <p>Summary: {issue.Summary}</p>
                 <p>Description: {issue.Description}</p>
@@ -63,10 +67,13 @@ const filterIssues = filter === 'All'
                 <p className="issue-id">ID: {issue.IssueID}</p>
                 <button className="delete-issue" onClick={() => deleteIssue(issue.IssueID)}>❌</button>
                 <button className="change-issue" onClick={() => {setModalOpen(true); setIDToEdit(issue);}}>🖋</button>
-
               </li>
             ))}
-          </ul>
+            </ul>
+            </div>
+          ) : (
+            <h2 className="no-issues">No issue in DB</h2>
+          )}
 
           <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
             <center><h2>Change an Issue</h2></center>
