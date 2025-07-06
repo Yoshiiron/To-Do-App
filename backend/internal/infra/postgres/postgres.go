@@ -57,5 +57,7 @@ func (i *issueRepository) ReturnAllIssues() ([]domain.Issue, error) {
 
 // Update implements repository.IssueRepository.
 func (i *issueRepository) Update(issue *domain.Issue, id int) error {
-	panic("unimplemented")
+	i.db.Where("issue_id = ?", id).UpdateColumns(issue)
+	fmt.Println("yes?")
+	return nil
 }
