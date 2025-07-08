@@ -18,8 +18,20 @@ func NewIssueRepository() repository.IssueRepository {
 	if err != nil {
 		panic("Error connecting to database")
 	}
+	tx := db.First(&domain.Issue{})
+	if tx.Error != nil {
+		fmt.Println("Table not found, creating new 'Issues' table")
+		CreateIssueTable(db)
+	}
 
 	return &issueRepository{db: db}
+}
+
+func CreateIssueTable(db *gorm.DB) {
+	err := db.Migrator().CreateTable(&domain.Issue{})
+	if err != nil {
+		panic("Error creating table")
+	}
 }
 
 // Create implements repository.IssueRepository.
@@ -38,7 +50,6 @@ func (i *issueRepository) Delete(id int) error {
 func (i *issueRepository) FindByID(id int) (*domain.Issue, int, error) {
 	issue := &domain.Issue{}
 	tx := i.db.Find(&issue, id)
-	fmt.Println(&domain.Issue{})
 	if issue.IssueID != 0 {
 		return issue, issue.IssueID, tx.Error
 	}
@@ -48,7 +59,6 @@ func (i *issueRepository) FindByID(id int) (*domain.Issue, int, error) {
 // ReturnAllIssues implements repository.IssueRepository.
 func (i *issueRepository) ReturnAllIssues() ([]domain.Issue, error) {
 	issues := []domain.Issue{}
-	i.db.Find(&issues)
 	if len(issues) == 0 {
 		return nil, fmt.Errorf("looks like db is empty")
 	}
@@ -57,7 +67,9 @@ func (i *issueRepository) ReturnAllIssues() ([]domain.Issue, error) {
 
 // Update implements repository.IssueRepository.
 func (i *issueRepository) Update(issue *domain.Issue, id int) error {
-	i.db.Where("issue_id = ?", id).UpdateColumns(issue)
-	fmt.Println("yes?")
+	tx := i.db.Where("issue_id = ?", id).UpdateColumns(issue)
+	if tx.Error != nil {
+		return tx.Error
+	}
 	return nil
 }
