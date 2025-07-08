@@ -1,0 +1,23 @@
+.label-input {
+    justify-content: center;
+    display: flex;
+}
+
+.create-btn {
+    position: relative;
+    justify-content: center;
+    display: flex;
+    padding-top: 20px;
+}
+
+.form {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.label-input {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
