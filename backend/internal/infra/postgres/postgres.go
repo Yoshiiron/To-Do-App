@@ -18,8 +18,8 @@ func NewIssueRepository() repository.IssueRepository {
 	if err != nil {
 		panic("Error connecting to database")
 	}
-	tx := db.First(&domain.Issue{})
-	if tx.Error != nil {
+	tableExist := db.Migrator().HasTable("issues")
+	if !tableExist {
 		fmt.Println("Table not found, creating new 'Issues' table")
 		CreateIssueTable(db)
 	}
@@ -27,11 +27,12 @@ func NewIssueRepository() repository.IssueRepository {
 	return &issueRepository{db: db}
 }
 
-func CreateIssueTable(db *gorm.DB) {
+func CreateIssueTable(db *gorm.DB) error {
 	err := db.Migrator().CreateTable(&domain.Issue{})
 	if err != nil {
 		panic("Error creating table")
 	}
+	return nil
 }
 
 // Create implements repository.IssueRepository.
