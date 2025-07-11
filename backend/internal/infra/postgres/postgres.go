@@ -14,7 +14,7 @@ type issueRepository struct {
 }
 
 func NewIssueRepository() repository.IssueRepository {
-	db, err := gorm.Open(pg.Open("host=127.0.0.1 user=arb password=arb dbname=todo sslmode=disable"), &gorm.Config{})
+	db, err := gorm.Open(pg.Open("host=localhost user=arb password=arb dbname=todo sslmode=disable"), &gorm.Config{})
 	if err != nil {
 		panic("Error connecting to database")
 	}
