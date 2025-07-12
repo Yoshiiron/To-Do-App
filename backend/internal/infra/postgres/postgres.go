@@ -14,12 +14,12 @@ type issueRepository struct {
 }
 
 func NewIssueRepository() repository.IssueRepository {
-	db, err := gorm.Open(pg.Open("host=localhost user=arb password=arb dbname=todo sslmode=disable"), &gorm.Config{})
+	db, err := gorm.Open(pg.Open("host=todo-db user=arb password=arb dbname=todo sslmode=disable"), &gorm.Config{})
 	if err != nil {
 		panic("Error connecting to database")
 	}
-	tx := db.First(&domain.Issue{})
-	if tx.Error != nil {
+	tableExist := db.Migrator().HasTable("issues")
+	if !tableExist {
 		fmt.Println("Table not found, creating new 'Issues' table")
 		CreateIssueTable(db)
 	}
@@ -27,11 +27,12 @@ func NewIssueRepository() repository.IssueRepository {
 	return &issueRepository{db: db}
 }
 
-func CreateIssueTable(db *gorm.DB) {
+func CreateIssueTable(db *gorm.DB) error {
 	err := db.Migrator().CreateTable(&domain.Issue{})
 	if err != nil {
 		panic("Error creating table")
 	}
+	return nil
 }
 
 // Create implements repository.IssueRepository.
@@ -59,6 +60,7 @@ func (i *issueRepository) FindByID(id int) (*domain.Issue, int, error) {
 // ReturnAllIssues implements repository.IssueRepository.
 func (i *issueRepository) ReturnAllIssues() ([]domain.Issue, error) {
 	issues := []domain.Issue{}
+	i.db.Find(&issues)
 	if len(issues) == 0 {
 		return nil, fmt.Errorf("looks like db is empty")
 	}
