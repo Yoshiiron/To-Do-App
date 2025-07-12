@@ -14,7 +14,7 @@ type issueRepository struct {
 }
 
 func NewIssueRepository() repository.IssueRepository {
-	db, err := gorm.Open(pg.Open("host=localhost user=arb password=arb dbname=todo sslmode=disable"), &gorm.Config{})
+	db, err := gorm.Open(pg.Open("host=todo-db user=arb password=arb dbname=todo sslmode=disable"), &gorm.Config{})
 	if err != nil {
 		panic("Error connecting to database")
 	}
@@ -60,6 +60,7 @@ func (i *issueRepository) FindByID(id int) (*domain.Issue, int, error) {
 // ReturnAllIssues implements repository.IssueRepository.
 func (i *issueRepository) ReturnAllIssues() ([]domain.Issue, error) {
 	issues := []domain.Issue{}
+	i.db.Find(&issues)
 	if len(issues) == 0 {
 		return nil, fmt.Errorf("looks like db is empty")
 	}
