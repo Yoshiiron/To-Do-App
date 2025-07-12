@@ -1,0 +1,32 @@
+services:
+  backend:
+    build:  
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+        restart: true
+    container_name: backend
+
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    container_name: frontend
+
+  postgres:
+    image: postgres:17.5-bullseye
+    environment:
+      - POSTGRES_PASSWORD=arb
+      - POSTGRES_DB=todo
+      - POSTGRES_USER=arb
+    container_name: todo-db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U arb -d todo"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
