@@ -1,8 +1,9 @@
 package main
 
 import (
+	"backend/internal/config"
 	"backend/internal/delivery"
-	"backend/internal/infra/postgres"
+	mdb "backend/internal/infra/MDB"
 	"backend/internal/usecases"
 
 	"github.com/gin-contrib/cors"
@@ -10,15 +11,15 @@ import (
 )
 
 func main() {
+	cfg := config.NewConfig()
 
-	//repo := mdb.NewIssueRepository()
-	repo := postgres.NewIssueRepository()
+	repo := mdb.NewIssueRepository()
+	//repo := postgres.NewIssueRepository()
 	usecase := usecases.NewIssueService(repo)
 	handler := delivery.NewIssueHandler(usecase)
 
 	r := gin.Default()
 	r.Use(cors.Default())
 	delivery.RegisterRoutes(r, handler)
-
-	r.Run()
+	r.Run(cfg.BackendAPI)
 }
