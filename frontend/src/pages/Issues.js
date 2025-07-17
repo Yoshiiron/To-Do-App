@@ -6,6 +6,8 @@ import '../styles/Issues.css';
 import Modal from "./modal";
 import ChangeForm from "./ChangeIssue";
 
+import config from "../config/config";
+
 function ItemList() {
 const [issues, setIssues] = useState([]);
 const [filter, setFilter] = useState('All');
@@ -13,7 +15,7 @@ const [modalOpen, setModalOpen] = useState(false);
 const [idToEdit, setIDToEdit] = useState(null);
 
 useEffect(() => {
-  axios.get("http://localhost:8080/tasks")
+  axios.get(`/api/tasks`)
   .then(resp => {
     setIssues(resp.data.response);
   })
@@ -22,7 +24,7 @@ useEffect(() => {
 }, [])
 
 const deleteIssue = (id) => {
-  axios.delete(`http://localhost:8080/tasks/${id}`)
+  axios.delete(`/api/tasks/${id}`)
   .then(() => {
     setIssues(prevIssue => prevIssue.filter(item => item.IssueID !== id));
   })

@@ -1,7 +1,7 @@
 package config
 
 import (
-	"log"
+	"fmt"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -23,8 +23,8 @@ func getEnv(env, defaultValue string) string {
 }
 
 func NewConfig() *Config {
-	if err := godotenv.Load("../.env"); err != nil {
-		log.Println("Warning: .env file not found, using environment variables")
+	if err := godotenv.Load(".env"); err != nil {
+		fmt.Println("Warning: .env file not found, using environment variables")
 	}
 
 	return &Config{

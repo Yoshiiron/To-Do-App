@@ -1,31 +1,35 @@
 services:
   backend:
     build:  
-      context: ./backend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: backend/Dockerfile
+    expose:
+      - 8080
     depends_on:
       postgres:
         condition: service_healthy
         restart: true
-    container_name: backend
+    container_name: ${BACKEND_CONTAINER_NAME}
 
   frontend:
     build: 
-      context: ./frontend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: frontend/Dockerfile
     ports:
       - 80:80
-    container_name: frontend
+    depends_on:
+      - backend
+    container_name: ${FRONT_CONTAINER_NAME}
 
   postgres:
     image: postgres:17.5-bullseye
     environment:
-      - POSTGRES_PASSWORD=arb
-      - POSTGRES_DB=todo
-      - POSTGRES_USER=arb
-    container_name: todo-db
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+    container_name: ${DB_CONTAINER_NAME}
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U arb -d todo"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
       interval: 10s
       retries: 5
       start_period: 30s
