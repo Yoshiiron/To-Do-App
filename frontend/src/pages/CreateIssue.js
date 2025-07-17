@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import '../styles/createIssue.css'
-import config from '../config/config';
 
 function CreateForm() {
 

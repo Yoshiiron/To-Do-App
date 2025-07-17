@@ -6,8 +6,6 @@ import '../styles/Issues.css';
 import Modal from "./modal";
 import ChangeForm from "./ChangeIssue";
 
-import config from "../config/config";
-
 function ItemList() {
 const [issues, setIssues] = useState([]);
 const [filter, setFilter] = useState('All');

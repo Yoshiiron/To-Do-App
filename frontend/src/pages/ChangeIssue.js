@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import '../styles/createIssue.css'
-import config from '../config/config';
 
 function ChangeForm({issue}) {
 
