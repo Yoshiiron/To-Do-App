@@ -6,8 +6,9 @@ COPY ./frontend .
 COPY ../.env .env
 RUN npm run build
 
-FROM nginx:stable-alpine AS production
+FROM nginx:stable-alpine
+COPY ./frontend/nginx.conf.template /etc/nginx/templates/nginx.conf.template
 COPY --from=builder /app/build /usr/share/nginx/html
-COPY ./frontend/nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80:80
-CMD ["nginx", "-g", "daemon off;"]
+COPY --from=builder /app/.env .env 
+EXPOSE 80
+CMD /bin/sh -c "envsubst '\$BACKEND_CONTAINER_NAME \$BACKEND_API' < /etc/nginx/templates/nginx.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
