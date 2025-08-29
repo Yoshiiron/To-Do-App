@@ -15,6 +15,9 @@ services:
     build: 
       context: .
       dockerfile: frontend/Dockerfile
+    environment:
+      BACKEND_CONTAINER_NAME: ${BACKEND_CONTAINER_NAME}
+      BACKEND_API: ${BACKEND_API}
     ports:
       - 80:80
     depends_on:
