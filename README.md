@@ -14,11 +14,6 @@ The following functional is currently implemented:
 - Task creation
 - Task edition
 - Task deletion
-
-## TO-DO
-- Postgres
-- Tests
-- Metrics using Grafana
 ---
 ## How to run the App
 
