@@ -15,7 +15,7 @@ function CreateForm() {
         };
 
         try {
-            const responce = await fetch('http://localhost:8080/tasks', {
+            const responce = await fetch(`/api/tasks`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

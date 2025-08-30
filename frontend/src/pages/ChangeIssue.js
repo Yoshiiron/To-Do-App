@@ -27,7 +27,7 @@ function ChangeForm({issue}) {
         };
 
         try {
-            const responce = await fetch(`http://localhost:8080/task/${issue.IssueID}`, {
+            const responce = await fetch(`/api/task/${issue.IssueID}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

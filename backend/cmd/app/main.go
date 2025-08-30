@@ -1,6 +1,7 @@
 package main
 
 import (
+	"backend/internal/config"
 	"backend/internal/delivery"
 	"backend/internal/infra/postgres"
 	"backend/internal/usecases"
@@ -10,6 +11,7 @@ import (
 )
 
 func main() {
+	cfg := config.NewConfig()
 
 	//repo := mdb.NewIssueRepository()
 	repo := postgres.NewIssueRepository()
@@ -19,6 +21,5 @@ func main() {
 	r := gin.Default()
 	r.Use(cors.Default())
 	delivery.RegisterRoutes(r, handler)
-
-	r.Run()
+	r.Run(cfg.BackendAPI)
 }

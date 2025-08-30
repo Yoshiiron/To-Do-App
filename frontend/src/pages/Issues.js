@@ -13,7 +13,7 @@ const [modalOpen, setModalOpen] = useState(false);
 const [idToEdit, setIDToEdit] = useState(null);
 
 useEffect(() => {
-  axios.get("http://localhost:8080/tasks")
+  axios.get(`/api/tasks`)
   .then(resp => {
     setIssues(resp.data.response);
   })
@@ -22,7 +22,7 @@ useEffect(() => {
 }, [])
 
 const deleteIssue = (id) => {
-  axios.delete(`http://localhost:8080/tasks/${id}`)
+  axios.delete(`/api/tasks/${id}`)
   .then(() => {
     setIssues(prevIssue => prevIssue.filter(item => item.IssueID !== id));
   })
@@ -44,20 +44,24 @@ const filterIssues = filter === 'All'
         <div>
           <center><h2>Issues</h2></center>
 
-          {filterIssues.length > 0 ? (
+          {issues.length > 0 ? (
+          <div>
+            <div className="filter-buttons">
+              {['All', 'To Do', 'In Progress', 'Done'].map(status => (
+                <button
+                key={status}
+                className={filter === status ? 'active-filter' : ''}
+                onClick={() => setFilter(status)}
+                >
+                  {status}
+                </button>
+              ))}
+            </div>
+            
+            {filterIssues.length === 0 && (
+              <h2 className="no-issues">No issues with status "{filter}"</h2>
+            ) || (
             <div>
-          <div className="filter-buttons">
-            {['All', 'To Do', 'In Progress', 'Done'].map(status => (
-              <button
-              key={status}
-              className={filter === status ? 'active-filter' : ''}
-              onClick={() => setFilter(status)}
-              >
-                {status}
-              </button>
-            ))}
-          </div>
-
               <ul class="issues">
               {filterIssues.map((issue, index) => (
               <li key={index} className="issue-card">
@@ -69,9 +73,11 @@ const filterIssues = filter === 'All'
                 <button className="change-issue" onClick={() => {setModalOpen(true); setIDToEdit(issue);}}>🖋</button>
               </li>
             ))}
-            </ul>
+              </ul>
             </div>
-          ) : (
+            )}
+          </div>) : 
+          (    
             <h2 className="no-issues">No issue in DB</h2>
           )}
 

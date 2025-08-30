@@ -1,6 +1,7 @@
 package postgres
 
 import (
+	"backend/internal/config"
 	"backend/internal/domain"
 	"backend/internal/repository"
 	"fmt"
@@ -14,7 +15,10 @@ type issueRepository struct {
 }
 
 func NewIssueRepository() repository.IssueRepository {
-	db, err := gorm.Open(pg.Open("host=todo-db user=arb password=arb dbname=todo sslmode=disable"), &gorm.Config{})
+	cfg := config.NewConfig()
+	dbConnInfo := fmt.Sprintf("host=%s user=%s password=%s dbname=%s", cfg.DBContainerName, cfg.DBUser, cfg.DBPassword, cfg.DBName)
+
+	db, err := gorm.Open(pg.Open(dbConnInfo), &gorm.Config{})
 	if err != nil {
 		panic("Error connecting to database")
 	}
