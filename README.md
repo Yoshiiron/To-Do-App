@@ -26,5 +26,8 @@ npm start
 ```
 
 ### Docker
-**NOT READY YET**
+```
+git clone git@github.com:Yoshiiron/To-Do-App.git
+docker compose up
+```
 
