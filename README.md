@@ -4,7 +4,7 @@ To-Do-App with golang backend and react frontend!
 ## 🛠 **Technology stack**
 | Technology  | Description |
 |------------|-------------|
-| **Golang** 🟦 | Main language of the project |
+| **Golang** 🐹 | Main language of the project |
 | **Gin** 🔀 | Used as router |
 | **SQLite/PostgreSQL** 🗄 | Planned DB for tasks |
 | **Docker** 🐳 | Containerization! |
