@@ -1,5 +1,5 @@
 # To-Do App
-Trying to create a To-Do app with Frontend and Backend.
+To-Do-App with golang backend and react frontend! 
 
 ## 🛠 **Technology stack**
 | Technology  | Description |
